@@ -9,19 +9,18 @@ from taxi.models import Driver, Car
 def validator_license_number(value: str):
     valid_length = 8
     license_number = value
-    valid_chars = all(
-        [license_number[:3].isalpha(),
-         license_number[:3] == license_number[:3].upper()]
-    )
+    valid_chars = license_number[:3].isalpha() and license_number[:3].isupper()
     valid_digits = license_number[3:].isdigit()
+
     if len(license_number) == valid_length and valid_chars and valid_digits:
         return license_number
+
     raise ValidationError(
         """
-    The license number must be 8 characters long,
-    The first 3 characters are capital letters,
-    The last 5 characters are numbers,
-    """
+        The license number must be 8 characters long,
+        The first 3 characters are capital letters,
+        The last 5 characters are numbers,
+        """
     )
 
 
